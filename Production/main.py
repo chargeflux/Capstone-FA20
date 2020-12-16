@@ -61,7 +61,9 @@ previous_runs: {previous_runs_parameter_names}\nunknown_run: {unknown_program_pa
         previous_run_config_cycle_data = previous_run_config_cycle_data[previous_run_config_cycle_data.program_name != remove_program]
 
     config_cycle_data_final = pd.concat([previous_run_config_cycle_data, unknown_program_run_config_cycle_data]).reset_index(drop=True)
-    best_config = model.get_best_config(config_cycle_data_final, unknown_program_run_config_cycle_data.program_name.values[0])
+    
+    scaled_config_cycle_data = model.scale_cycles(config_cycle_data_final)
+    best_config = model.get_best_config(scaled_config_cycle_data, unknown_program_run_config_cycle_data.program_name.values[0])
 
     unknown_config = unknown_program_run_config_cycle_data.config.values[0].split(",")
 
@@ -71,11 +73,10 @@ previous_runs: {previous_runs_parameter_names}\nunknown_run: {unknown_program_pa
         if best_parameter_value != unknown_parameter_value:
             num_parameters_to_consider += 1
             names_parameters_to_consider.append(unknown_program_parameter_names[idx])
-    
-    print("="*50)
+
     print(f"{num_parameters_to_consider} parameters")
     print(f"{', '.join(names_parameters_to_consider)}")
-
+    print("="*50)
     print("Moving unknown program files to previous runs")
 
     unk_path = Path(unknown_program_path)

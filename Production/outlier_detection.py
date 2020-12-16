@@ -27,7 +27,7 @@ def get_PCA_result(X, Y):
     known_program_names = mean_df.program_name.values.tolist()
     pca_known_centroid = mean_df.loc[:,mean_df.columns != 'program_name'].values.tolist()
 
-    print("Outlier via PCA")
+    print("Detect outlier via PCA")
     outlier = None
     for unk_program in pca_unknown:
         outlier = calculate_distance(known_program_names, pca_known_centroid, unk_program[1:])
@@ -48,7 +48,7 @@ def get_TSNE_result(X, Y):
     known_program_names = mean_df.program_name.values.tolist()
     tsne_known_centroid = mean_df.loc[:, mean_df.columns != 'program_name'].values.tolist()
 
-    print("Outlier via T-SNE")
+    print("Detect outlier via T-SNE")
     outlier=None
     for unk_program in tsne_unknown:
         outlier = calculate_distance(known_program_names, tsne_known_centroid, unk_program[1:])

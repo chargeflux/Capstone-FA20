@@ -36,6 +36,5 @@ def get_best_config(input_data, unknown_program_name):
         estimates[possible_config] = est
 
     best_config = sorted(estimates.items(), key= lambda x: x[1])[0][0]
-
     return best_config.split(",")
 
